@@ -3,8 +3,8 @@ if six.PY3:
     from urllib import parse as urlparse
     from urllib.parse import quote_plus
 else:
-    import urlparse
-    from urllib import quote_plus
+    import urllib.parse
+    from urllib.parse import quote_plus
 
 DEFAULT_PORTS = {
     'http': 80,
@@ -44,7 +44,7 @@ class URL(object):
 
     def __init__(self, url=None):
         if url is not None:
-            scheme, netloc, path, query, fragment = urlparse.urlsplit(url)
+            scheme, netloc, path, query, fragment = urllib.parse.urlsplit(url)
         else:
             scheme, netloc, path, query, fragment = 'http', '', '/', '', ''
 
@@ -83,7 +83,7 @@ class URL(object):
         self.path = path or ''
 
         self.query = dict()
-        for key, value in six.iteritems(urlparse.parse_qs(query)):
+        for key, value in six.iteritems(urllib.parse.parse_qs(query)):
             if len(value) > 1:
                 self.query[key] = value
             else:
@@ -129,7 +129,7 @@ class URL(object):
                 self.query_string, self.fragment))
 
     def __str__(self):
-        return urlparse.urlunsplit(tuple(self))
+        return urllib.parse.urlunsplit(tuple(self))
 
     def __eq__(self, other):
         return str(self) == str(other)

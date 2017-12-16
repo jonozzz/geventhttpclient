@@ -146,19 +146,19 @@ class Headers(dict):
         other = args[0] if len(args) >= 1 else ()
 
         if isinstance(other, Headers):
-            for key, val in other.iteritems():
+            for key, val in other.items():
                 self.add(key, val)
         elif isinstance(other, Mapping):
             for key in other:
                 self.add(key, other[key])
         elif hasattr(other, "keys"):
-            for key in other.keys():
+            for key in list(other.keys()):
                 self.add(key, other[key])
         else:
             for key, value in other:
                 self.add(key, value)
 
-        for key, value in kwargs.items():
+        for key, value in list(kwargs.items()):
             self.add(key, value)
 
     def getlist(self, key):

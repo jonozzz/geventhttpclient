@@ -7,8 +7,8 @@ gevent.monkey.patch_all()
 import pytest
 
 if six.PY2:
-    from cookielib import CookieJar
-    from urllib2 import Request
+    from http.cookiejar import CookieJar
+    from urllib.request import Request
 else:
     from http.cookiejar import CookieJar
     from urllib.request import Request
@@ -138,15 +138,15 @@ def test_compatibility_with_previous_API_write():
     assert h['asdf'] == 'dfdf'
 
 def test_copy():
-    rnd_txt = lambda length: ''.join(random.choice(string.ascii_letters) for _ in xrange(length))
-    h = Headers((rnd_txt(10), rnd_txt(50)) for _ in xrange(100))
+    rnd_txt = lambda length: ''.join(random.choice(string.ascii_letters) for _ in range(length))
+    h = Headers((rnd_txt(10), rnd_txt(50)) for _ in range(100))
     c = h.copy()
     assert h is not c
     assert len(h) == len(c)
     assert set(h.keys()) == set(c.keys())
     assert h == c
     assert type(h) is type(c)
-    for _ in xrange(100):
+    for _ in range(100):
         rnd_key = rnd_txt(9)
         c[rnd_key] = rnd_txt(10)
         assert rnd_key in c

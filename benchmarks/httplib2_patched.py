@@ -14,7 +14,7 @@ if __name__ == "__main__":
         def __init__(self, factory, size=5):
             self.factory = factory
             self.queue = gevent.queue.Queue(size)
-            for i in xrange(size):
+            for i in range(size):
                 self.queue.put(factory())
 
         @contextmanager
@@ -43,16 +43,16 @@ if __name__ == "__main__":
     http_pool = ConnectionPool(httplib2_factory(), size=C)
     group = gevent.pool.Pool(size=C)
 
-    for i in xrange(5):
+    for i in range(5):
         now = time.time()
-        for _ in xrange(N):
+        for _ in range(N):
             group.spawn(run, http_pool)
         group.join()
     
         delta = time.time() - now
         req_per_sec = N / delta
     
-        print "request count:%d, concurrenry:%d, %f req/s" % (
-            N, C, req_per_sec)
+        print("request count:%d, concurrenry:%d, %f req/s" % (
+            N, C, req_per_sec))
 
 

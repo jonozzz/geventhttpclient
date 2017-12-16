@@ -123,7 +123,7 @@ def test_multi_queries_greenlet_safe():
     count = 0
 
     gevent.spawn_later(0.2, event.set)
-    for response, content in group.imap_unordered(run, xrange(5)):
+    for response, content in group.imap_unordered(run, range(5)):
         assert response.status_code == 200
         assert len(content)
         count += 1
@@ -136,7 +136,7 @@ class StreamTestIterator(object):
         lines = [json.dumps({
                  'index': i,
                  'title': 'this is line %d' % i})
-                 for i in xrange(0, count)]
+                 for i in range(0, count)]
         self.buf = (sep.join(lines) + sep).encode()
 
     def __len__(self):
@@ -146,7 +146,7 @@ class StreamTestIterator(object):
         self.cursor = 0
         return self
 
-    def next(self):
+    def __next__(self):
         if self.cursor >= len(self.buf):
             raise StopIteration()
 
@@ -158,7 +158,7 @@ class StreamTestIterator(object):
         return data
 
     def __next__(self):
-        return self.next()
+        return next(self)
 
 
 def readline_iter(sock, addr):

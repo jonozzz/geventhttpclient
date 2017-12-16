@@ -4,8 +4,8 @@ if six.PY3:
     from http.client import HTTPException
     from io import StringIO
 else:
-    from httplib import HTTPException
-    from cStringIO import StringIO
+    from http.client import HTTPException
+    from io import StringIO
 import pytest
 
 from functools import wraps
@@ -31,7 +31,7 @@ def wrap_refcount(method):
         deltas = []
         d = None
         try:
-            for _ in xrange(4):
+            for _ in range(4):
                 d = gettotalrefcount()
                 method(*args, **kwargs)
                 if 'urlparse' in sys.modules:

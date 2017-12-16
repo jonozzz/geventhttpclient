@@ -50,10 +50,10 @@ class HTTPResponse(HTTPResponseParser):
         return self._headers_index.get(key, default)
 
     def iteritems(self):
-        return self._headers_index.iteritems()
+        return iter(self._headers_index.items())
 
     def items(self):
-        return self._headers_index.items()
+        return list(self._headers_index.items())
 
     def info(self):
         """ Basic cookielib compatibility """
@@ -91,7 +91,7 @@ class HTTPResponse(HTTPResponseParser):
             if six.PY3:
                 return int(length)
             else:
-                return long(length)
+                return int(length)
 
     @property
     def length(self):
@@ -274,7 +274,7 @@ class HTTPSocketResponse(HTTPResponse):
     def __iter__(self):
         return self
 
-    def next(self):
+    def __next__(self):
         bytes = self.read(self.block_size)
         if not len(bytes):
             raise StopIteration()

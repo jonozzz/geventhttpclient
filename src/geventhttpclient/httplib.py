@@ -74,7 +74,7 @@ class HTTPResponse(response.HTTPSocketResponse):
         return self.get(name.lower(), default)
 
     def getheaders(self):
-        return self._headers_index.items()
+        return list(self._headers_index.items())
 
     @property
     def will_close(self):

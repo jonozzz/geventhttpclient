@@ -98,7 +98,7 @@ class CompatRequest(object):
         return header_name in self.headers
 
     def header_items(self):
-        return self.headers.items()
+        return list(self.headers.items())
 
     def add_unredirected_header(self, key, val):
         self.headers.add(key, val)
@@ -211,7 +211,7 @@ class CompatResponse(object):
         except (IndexError, ValueError):
             return len(self.content)
 
-    def __nonzero__(self):
+    def __bool__(self):
         """ If we have an empty response body, we still don't want to evaluate as false
         """
         return True
@@ -331,11 +331,11 @@ class UserAgent(object):
                 payload.update(kwargs)
 
         req = self._make_request(url, method=method, headers=headers, payload=payload)
-        for retry in xrange(self.max_retries):
+        for retry in range(self.max_retries):
             if retry > 0 and self.retry_delay:
                 # Don't wait the first time and skip if no delay specified
                 gevent.sleep(self.retry_delay)
-            for _ in xrange(self.max_redirects):
+            for _ in range(self.max_redirects):
                 if self.cookiejar is not None:
                     self.cookiejar.add_cookie_header(req)
 
@@ -428,7 +428,7 @@ class UserAgent(object):
         else:
             offset = 0
 
-        for _ in xrange(self.max_retries):
+        for _ in range(self.max_retries):
             if offset:
                 headers['Range'] = 'bytes=%d-' % offset
                 resp = self.urlopen(url, headers=headers, **kwargs)

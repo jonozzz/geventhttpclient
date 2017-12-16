@@ -157,7 +157,7 @@ class HTTPClient(object):
 
         request = method + WHITESPACE + request_url + WHITESPACE + self.version + CRLF
 
-        for field, value in header_fields.iteritems():
+        for field, value in header_fields.items():
             request += field + FIELD_VALUE_SEP + str(value) + CRLF
         request += CRLF
         return request
@@ -214,13 +214,13 @@ class HTTPClient(object):
     def head(self, request_uri, headers={}):
         return self.request(METHOD_HEAD, request_uri, headers=headers)
 
-    def post(self, request_uri, body=u'', headers={}):
+    def post(self, request_uri, body='', headers={}):
         return self.request(METHOD_POST, request_uri, body=body, headers=headers)
 
-    def put(self, request_uri, body=u'', headers={}):
+    def put(self, request_uri, body='', headers={}):
         return self.request(METHOD_PUT, request_uri, body=body, headers=headers)
 
-    def delete(self, request_uri, body=u'', headers={}):
+    def delete(self, request_uri, body='', headers={}):
         return self.request(METHOD_DELETE, request_uri, body=body, headers=headers)
 
 
@@ -244,5 +244,5 @@ class HTTPClientPool(object):
             return client
 
     def close(self):
-        for client in self.clients.values():
+        for client in list(self.clients.values()):
             client.close()

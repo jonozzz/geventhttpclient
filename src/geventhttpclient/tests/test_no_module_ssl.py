@@ -12,7 +12,7 @@ class DisableSSL(object):
         sys.modules['ssl'] = None
 
         # ensure gevent must be re-imported to fire an ssl ImportError
-        for module_name in [k for k in sys.modules.keys() if k.startswith('gevent')]:
+        for module_name in [k for k in list(sys.modules.keys()) if k.startswith('gevent')]:
             self._modules[module_name] = sys.modules.pop(module_name)
 
     def __exit__(self, *args, **kwargs):

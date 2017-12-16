@@ -99,7 +99,7 @@ def test_server_error_with_unicode():
     with wsgiserver(internal_server_error()):
         useragent = UserAgent()
         with pytest.raises(BadStatusCode):
-            useragent.urlopen('http://127.0.0.1:54323/', method='POST', payload=u"12345")
+            useragent.urlopen('http://127.0.0.1:54323/', method='POST', payload="12345")
 
 
 def test_server_error_with_file():

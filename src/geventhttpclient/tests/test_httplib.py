@@ -1,7 +1,7 @@
 import six
 import pytest
 if six.PY2:
-    from httplib import HTTPException
+    from http.client import HTTPException
 else:
     from http.client import HTTPException
 
